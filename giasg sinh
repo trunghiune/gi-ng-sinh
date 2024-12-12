@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Tree</title>
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .tree {
+            line-height: 1.2;
+            white-space: pre;
+            font-size: 18px;
+            font-family: monospace;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 24px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .star {
+            color: gold;
+            font-size: 24px;
+            text-shadow: 0 0 8px gold;
+        }
+    </style>
+</head>
+<body>
+    <div class="tree" id="tree"></div>
+    <div class="message" id="message"></div>
+
+    <script>
+        function drawTree(height) {
+            const treeDiv = document.getElementById("tree");
+            treeDiv.innerHTML = "";
+
+            // Add a star on top
+            treeDiv.innerHTML += "<div class='star'>★</div>\n";
+
+            for (let i = 1; i <= height; i++) {
+                let spaces = "&nbsp;".repeat(height - i);
+                let stars = "";
+
+                for (let j = 0; j < 2 * i - 1; j++) {
+                    if (Math.random() > 0.8) {
+                        stars += `<span style='color: hsl(${Math.random() * 360}, 100%, 70%);'>o</span>`; // Ornaments
+                    } else {
+                        stars += `<span style='color: green;'>*</span>`; // Tree leaves
+                    }
+                }
+
+                treeDiv.innerHTML += spaces + stars + "<br>";
+            }
+
+            // Draw the trunk
+            for (let i = 0; i < 2; i++) {
+                let spaces = "&nbsp;".repeat(height - 1);
+                let trunk = `<span style='color: brown;'>|||</span>`;
+                treeDiv.innerHTML += spaces + trunk + "<br>";
+            }
+        }
+
+        function showMessage() {
+            const messageDiv = document.getElementById("message");
+            const message = "Chúc Giáng Sinh An Lành!";
+            let index = 0;
+            messageDiv.innerHTML = "";
+
+            function typeChar() {
+                if (index < message.length) {
+                    let char = message[index];
+                    messageDiv.innerHTML += `<span style='color:hsl(${Math.random() * 360}, 100%, 70%)'>${char}</span>`;
+                    index++;
+                    setTimeout(typeChar, 100);
+                }
+            }
+
+            typeChar();
+        }
+
+        // Main
+        const height = 15; // Change the tree height here
+        drawTree(height);
+        setTimeout(showMessage, 1000);
+    </script>
+</body>
+</html>
